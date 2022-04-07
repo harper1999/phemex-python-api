@@ -18,8 +18,8 @@ from math import trunc
 import hmac
 import hashlib
 
-api_key = ''
-api_secret = ''
+api_key = 'abeb540f-076d-4be7-886b-221b1001a573'
+api_secret = 'eh_m1m0KZ3KXRIHIWCp7lhmIcsDOK4MNzdcsmLCNZwQ1MzkxYjU3NC1mM2UzLTRlOWQtYmU0Ny04Njg3MTU1ZTgyYmM'
 
 
 def on_message(ws, message):  # 在接收到服务器返回的消息时调用。有两个参数，一个是该类本身，一个是从服务器获取的字符串（utf-8格式）

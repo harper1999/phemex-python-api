@@ -12,13 +12,13 @@ import logging
 class Client(object):
     def __init__(self, on_mainnet=False):
         if on_mainnet:
-            self.api_URL = constant.URL.highratelimit_restapi
-            self.api_key = ''
-            self.api_secret = ''
+            self.api_URL = constant.URL.mainnet_api
+            self.api_key = '4e9794b2-8644-4fd4-973f-f0a5be6c6763'
+            self.api_secret = 'e8dfd4Gtm8D7vuO9CJrBJuLpzC2v0MyFQqoXeNgGc-ZjMzdiOThjOS1lOGU0LTRmMDEtODAxYi1lMmUyMzc0ZDA1YzA'
         else:
             self.api_URL = constant.URL.testnet_api
-            self.api_key = ""
-            self.api_secret = ""
+            self.api_key = "abeb540f-076d-4be7-886b-221b1001a573"
+            self.api_secret = "eh_m1m0KZ3KXRIHIWCp7lhmIcsDOK4MNzdcsmLCNZwQ1MzkxYjU3NC1mM2UzLTRlOWQtYmU0Ny04Njg3MTU1ZTgyYmM"
         self.session = requests.session()
 
     def _send_request(self, method, endpoint, params=None, body=None):
@@ -55,7 +55,7 @@ class Client(object):
             logging.debug(sub_dict)  # 输出响应头中的请求查询号，单轮最大请求数和剩余可用请求数
 
         if not str(response.status_code).startswith('2'):  # 如果响应体中的状态码不是以2开头
-            raise PhemexAPIException(response)    # 主动抛出异常，触发异常后执行异常处理代码，而不会执行后面的代码
+            raise PhemexAPIException(response)
         try:
             res_json = response.json()  # 接口响应都是json格式的数据 以反序列化返回response对象中的二进制流content
         except ValueError:
@@ -254,4 +254,4 @@ class Client(object):
 
     def request_withdrawal(self, params: dict, body: dict):
         # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#request-withdraw
-        return self._send_request('post', '', params=params, body=body)
+        return self._send_request('post', '/exchange/wallets/v2/createWithdraw', params=params, body=body)

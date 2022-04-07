@@ -9,7 +9,10 @@ import hmac
 import hashlib
 import pprint
 
-
+# api_key = "2dfd9f1a-ff73-462a-8f69-0274e043b323"
+# api_secret = "6b9XnreinDMCNNlaNxfeoblIXiRcALtco35KcholPx5iMjI0ZTY5NS00MWY5LTRiOGMtYWZmMC1lZDc3ZjdmMTgzYjQ"
+api_key = 'abeb540f-076d-4be7-886b-221b1001a573'
+api_secret = 'eh_m1m0KZ3KXRIHIWCp7lhmIcsDOK4MNzdcsmLCNZwQ1MzkxYjU3NC1mM2UzLTRlOWQtYmU0Ny04Njg3MTU1ZTgyYmM'
 
 test_ws = "wss://testnet.phemex.com/ws"
 

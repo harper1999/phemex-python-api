@@ -11,7 +11,7 @@ from phemex.exceptions import PhemexAPIException
 import phemex.constant as constant
 
 # Create a client
-client = Client(True)
+client = Client(False)
 
 # place a new order by post, priceEp is scaled price, check our API doc for more info about scaling
 # https://github.com/phemex/phemex-api-docs/blob/master/Public-API-en.md#scalingfactors0
