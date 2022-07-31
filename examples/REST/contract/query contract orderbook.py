@@ -16,9 +16,9 @@ client = Client(False)
 try:
     orderbook = client.query_contract_orderbook(utils.Symbol.BTCUSD)['result']['book']
     print(f'获取的订单薄为: {orderbook}')
-    best_ask = orderbook['asks'][1]
+    best_ask = orderbook['asks'][0]
     print(f'最低卖价价为:{best_ask}')
-    best_bid = orderbook['bids'][1]
+    best_bid = orderbook['bids'][-1]
     print(f'最高买价为: {best_bid}')
 
 except PhemexAPIException as e:
