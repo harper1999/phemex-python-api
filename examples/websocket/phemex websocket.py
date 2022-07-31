@@ -50,6 +50,6 @@ if __name__ == "__main__":
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp("wss://testnet.phemex.com/ws/", on_open=on_open, on_message=on_message,
                                 on_error=on_error, on_close=on_close)
-    ws.run_forever(dispatcher=rel)  # Set dispatcher to automatic reconnection  执行中跳转执行on_open
-    rel.signal(2, rel.abort)  # Keyboard Interrupt  返回<Signal Object | Callback:"abort">
-    rel.dispatch()  # 执行中跳转执行on_message
+    ws.run_forever(dispatcher=rel)  # Set dispatcher to automatic reconnection  
+    rel.signal(2, rel.abort)  # Keyboard Interrupt  
+    rel.dispatch()  
