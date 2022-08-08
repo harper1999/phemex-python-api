@@ -13,22 +13,18 @@ class Client(object):
     def __init__(self, gateway: str):
         if gateway == 'api':
             self.api_URL = constant.Gateway.mainnet_api
-            # self.api_key = '75120dc5-0acb-49d1-a135-42a9a2bd8396'  # 子账户
-            # self.api_secret = '2o8SdLvnz7_2lFqCEKkKwXVDu14zddhPcM9S2-1qhqE0NGZkNjNkOS1jZmY3LTRlYWItOTEwMS1mNTg0NmU4OGM2MWQ'
-            self.api_key = '1f31da3c-3747-4b88-b423-e8b524b44de9'  # 主账户
-            self.api_secret = 'ZLRKwDte6zdOlQAA4nsPUu1b9x_OiOGzjhnc-xFjWlEzYmJhZGJlNy1kNzljLTRiZjctOGQxMS1iNDI0MjA4YWM3NmI'
+            self.api_key = ''  
+            self.api_secret = ''
 
         elif gateway == 'vapi':
             self.api_URL = constant.Gateway.highratelimit_restapi
-            self.api_key = '4e9794b2-8644-4fd4-973f-f0a5be6c6763'  # vapi
-            self.api_secret = 'e8dfd4Gtm8D7vuO9CJrBJuLpzC2v0MyFQqoXeNgGc-ZjMzdiOThjOS1lOGU0LTRmMDEtODAxYi1lMmUyMzc0ZDA1YzA'
+            self.api_key = ''  # vapi
+            self.api_secret = ''
 
         elif gateway == 'testnet':
             self.api_URL = constant.Gateway.testnet_api
-            # self.api_key = "abeb540f-076d-4be7-886b-221b1001a573"   # 旧QA
-            # self.api_secret = "eh_m1m0KZ3KXRIHIWCp7lhmIcsDOK4MNzdcsmLCNZwQ1MzkxYjU3NC1mM2UzLTRlOWQtYmU0Ny04Njg3MTU1ZTgyYmM"
-            self.api_key = 'd351ce2d-10b4-4692-b9c4-390fa688e839'  # fat
-            self.api_secret = 'nOPiUHr5_VQ_rSbNkiOp7Ef-9EdBVsL1BG6eVAGE2ok5ZjEwZjJjMS03ZTZmLTQzNTktYWE1Yi0xNzI0YzNjODI0MDk'
+            self.api_key = '' 
+            self.api_secret = ''
 
         else:
             print(f'gateway: {gateway}  wrong gateway')
