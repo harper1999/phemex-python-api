@@ -1,6 +1,3 @@
-from phemex import client
-
-
 class PhemexAPIException(Exception):    # 自定义异常PhemexAPIException，基类为Exception
     def __init__(self, response):
         self.code = 0

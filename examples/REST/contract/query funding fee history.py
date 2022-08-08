@@ -1,7 +1,7 @@
 # -*- coding=utf-8 -*-
-# @Time: 2022/3/31 16:22
+# @Time: 2022/5/20 16:05
 # @Author: Harper
-# @File: query open orders.py
+# @File: query funding fee history.py
 # @Software: PyCharm
 
 
@@ -19,16 +19,19 @@ pd.set_option('expand_frame_repr', False)  # False表示不允许换行
 pd.set_option('display.max_columns', None)  # 显示所有列
 pd.set_option('display.max_rows', None)  # 显示所有行
 
-# Create a client
 client = Client(constant.Gateway.testnet)
 
 try:
-    r = client.query_open_spot_orders(constant.Symbol.sBTCUSDT)
-    if r['data']:
-        open_orders = pd.DataFrame(r['data'])
-        print(open_orders)
+    r = client.query_funding_fee_hisotry({'symbol': constant.Symbol.BTCUSD, 'offset': '70', 'limit': 50})
+    funding_fee_history = r['data']['rows']
+    if funding_fee_history:
+        funding_fee_history = pd.DataFrame(funding_fee_history)
+        funding_fee_history['createTime'] = pd.to_datetime(funding_fee_history['createTime'], unit='ms')
+        print(funding_fee_history)
+
     else:
-        print('已无挂单')
+        print(f'没有任何记录')
 
 except PhemexAPIException as e:
     print(e)
+

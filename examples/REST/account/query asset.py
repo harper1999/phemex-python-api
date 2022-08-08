@@ -5,11 +5,11 @@
 # @Software: PyCharm
 
 import pprint
-import json
+import phemex.constant as constant
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
 
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 # 查询所有账户资产信息
 try:

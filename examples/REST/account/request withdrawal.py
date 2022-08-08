@@ -6,10 +6,10 @@
 
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 import pyotp
 
-client = Client(True)
+client = Client(constant.Gateway.testnet)
 
 # 该接口目前仅供内部使用
 try:
@@ -18,7 +18,7 @@ try:
     otpCode = totp.now()
     r = client.request_withdrawal({'otpCode': otpCode},
                                   {'address': 'TFSjunMkCds1Nqz68UedJQPhVthdvqUE2D', 'amountEv': 100_0000_0000,
-                                   'currency': utils.Currency.USDT})
+                                   'currency': constant.Currency.USDT})
     print(r)
 
 except PhemexAPIException as e:

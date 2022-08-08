@@ -8,9 +8,11 @@ import pprint
 import json
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
+import phemex.constant as constant
+
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 # 查询交易账户资产信息
 try:

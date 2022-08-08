@@ -6,14 +6,14 @@
 
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 # 通用划转 子母账户互转及不同子账户互转 现货和合约均可
 try:
-    print(client.universal_transfer({'fromUserId': 940516, 'toUserId': 920430, 'currency': utils.Currency.BTC,
+    print(client.universal_transfer({'fromUserId': 940516, 'toUserId': 920430, 'currency': constant.Currency.BTC,
                                      'amountEv': 1000_0000, 'bizType': 'SPOT'}))    # btc的amountEv为10^8
 
 except PhemexAPIException as e:

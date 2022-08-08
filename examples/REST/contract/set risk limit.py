@@ -9,9 +9,9 @@ from phemex.exceptions import PhemexAPIException
 import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
-# # Set risk limit for 150 BTC
+# Set risk limit for 150 BTC
 try:
     r = client.change_risklimit(constant.Symbol.BTCUSD, 150)
     print("response:" + str(r))

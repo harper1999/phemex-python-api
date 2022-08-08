@@ -7,13 +7,13 @@
 import time
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 try:
     r = client.query_sub_to_main_spot_transfer(
-        {'currency': utils.Currency.BTC, 'start': 0, 'end': int(time.time() * 1000), 'limit': 50, 'offset': 0})
+        {'currency': constant.Currency.BTC, 'start': 0, 'end': int(time.time() * 1000), 'limit': 50, 'offset': 0})
     print(r)
 
 except PhemexAPIException as e:

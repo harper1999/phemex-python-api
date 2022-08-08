@@ -9,9 +9,9 @@ from phemex.exceptions import PhemexAPIException
 import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client('testnet')
 
-# # Set leverage
+# Set leverage
 try:
     # Set 0 to change back to cross margin
     # Set to 10x

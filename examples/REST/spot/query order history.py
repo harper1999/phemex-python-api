@@ -6,7 +6,7 @@
 
 import time
 import pandas as pd
-import phemex.constant as utils
+import phemex.constant as constant
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
 
@@ -18,14 +18,14 @@ pd.set_option('expand_frame_repr', False)  # False表示不允许换行
 pd.set_option('display.max_columns', None)  # 显示所有列
 pd.set_option('display.max_rows', None)  # 显示所有行
 
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 try:
-    start = int(time.mktime(time.strptime('2021-1-1 00:00:00', '%Y-%m-%d %H:%M:%S'))) * 1000
-    end = int(time.mktime(time.strptime('2022-4-1 00:03:00', '%Y-%m-%d %H:%M:%S'))) * 1000
+    start = int(time.mktime(time.strptime('2022-03-01 00:00:00', '%Y-%m-%d %H:%M:%S'))) * 1000
+    end = int(time.mktime(time.strptime('2022-04-11 00:00:00', '%Y-%m-%d %H:%M:%S'))) * 1000
     now = int(time.time() * 1000)
     r = client.query_spot_order_history(
-        {'symbol': utils.Symbol.sBTCUSDT, 'start': start, 'end': end, 'offset': 0, 'limit': 20})
+        {'symbol': constant.Symbol.sFEIUSDT, 'start': start, 'end': now, 'offset': 0, 'limit': 200})
     order_history = r['data']['rows']
 
     if order_history:
