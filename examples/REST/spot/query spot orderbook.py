@@ -6,13 +6,13 @@
 
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 # 查询订单薄
 try:
-    print(client.query_spot_orderbook(utils.Symbol.BTCUSD))
+    print(client.query_spot_orderbook(constant.Symbol.BTCUSD))
 except PhemexAPIException as e:
     print(e)

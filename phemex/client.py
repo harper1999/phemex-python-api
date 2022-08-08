@@ -10,15 +10,30 @@ import logging
 
 
 class Client(object):
-    def __init__(self, on_mainnet=False):
-        if on_mainnet:
-            self.api_URL = constant.URL.mainnet_api
-            self.api_key = '4e9794b2-8644-4fd4-973f-f0a5be6c6763'
+    def __init__(self, gateway: str):
+        if gateway == 'api':
+            self.api_URL = constant.Gateway.mainnet_api
+            # self.api_key = '75120dc5-0acb-49d1-a135-42a9a2bd8396'  # 子账户
+            # self.api_secret = '2o8SdLvnz7_2lFqCEKkKwXVDu14zddhPcM9S2-1qhqE0NGZkNjNkOS1jZmY3LTRlYWItOTEwMS1mNTg0NmU4OGM2MWQ'
+            self.api_key = '1f31da3c-3747-4b88-b423-e8b524b44de9'  # 主账户
+            self.api_secret = 'ZLRKwDte6zdOlQAA4nsPUu1b9x_OiOGzjhnc-xFjWlEzYmJhZGJlNy1kNzljLTRiZjctOGQxMS1iNDI0MjA4YWM3NmI'
+
+        elif gateway == 'vapi':
+            self.api_URL = constant.Gateway.highratelimit_restapi
+            self.api_key = '4e9794b2-8644-4fd4-973f-f0a5be6c6763'  # vapi
             self.api_secret = 'e8dfd4Gtm8D7vuO9CJrBJuLpzC2v0MyFQqoXeNgGc-ZjMzdiOThjOS1lOGU0LTRmMDEtODAxYi1lMmUyMzc0ZDA1YzA'
+
+        elif gateway == 'testnet':
+            self.api_URL = constant.Gateway.testnet_api
+            # self.api_key = "abeb540f-076d-4be7-886b-221b1001a573"   # 旧QA
+            # self.api_secret = "eh_m1m0KZ3KXRIHIWCp7lhmIcsDOK4MNzdcsmLCNZwQ1MzkxYjU3NC1mM2UzLTRlOWQtYmU0Ny04Njg3MTU1ZTgyYmM"
+            self.api_key = 'd351ce2d-10b4-4692-b9c4-390fa688e839'  # fat
+            self.api_secret = 'nOPiUHr5_VQ_rSbNkiOp7Ef-9EdBVsL1BG6eVAGE2ok5ZjEwZjJjMS03ZTZmLTQzNTktYWE1Yi0xNzI0YzNjODI0MDk'
+
         else:
-            self.api_URL = constant.URL.testnet_api
-            self.api_key = "abeb540f-076d-4be7-886b-221b1001a573"
-            self.api_secret = "eh_m1m0KZ3KXRIHIWCp7lhmIcsDOK4MNzdcsmLCNZwQ1MzkxYjU3NC1mM2UzLTRlOWQtYmU0Ny04Njg3MTU1ZTgyYmM"
+            print(f'gateway: {gateway}  wrong gateway')
+            quit()
+
         self.session = requests.session()
 
     def _send_request(self, method, endpoint, params=None, body=None):
@@ -42,17 +57,22 @@ class Client(object):
             'x-phemex-request-expiry': expiry,
             'x-phemex-access-token': self.api_key,
             'Content-Type': 'application/json',
-            'x-phemex-request-tracing': '',  # 用户端携带uuid(要求小于40字节)来追溯延迟问题
+            'x-phemex-request-tracing': 'xxx',  # 用户端携带uuid(要求小于40字节)来追溯延迟问题
         })
         response = self.session.request(method, url, data=body_str.encode())
-        logging.basicConfig(level=logging.DEBUG,
+        logging.basicConfig(level=logging.INFO,
                             format='%(asctime)s|%(levelname)s|%(filename)s:%(lineno)s|%(message)s')
         # :%(lineno)s 以格式化输出程序执行的行号
         # logging.debug(response.headers)
-        if 'x-ratelimit-remaining' in response.headers:
+        if 'x-ratelimit-remaining' in response.headers:  # 流量是按uid划分的 与api_key的数量无关
             sub_dict = {a: response.headers[a] for a in
                         ['x-phemex-request-tracing', 'x-ratelimit-remaining', 'x-ratelimit-capacity']}
-            logging.debug(sub_dict)  # 输出响应头中的请求查询号，单轮最大请求数和剩余可用请求数
+            logging.info(sub_dict)  # 输出响应头中的请求查询号，单轮最大请求数和剩余可用请求数
+
+        elif response.headers.get('x-rateLimit-remaining-contract'):
+            sub_dict = {a: response.headers[a] for a in
+                        ['x-phemex-request-tracing', 'x-rateLimit-remaining-contract', 'x-ratelimit-capacity-contract']}
+            logging.info(sub_dict)
 
         if not str(response.status_code).startswith('2'):  # 如果响应体中的状态码不是以2开头
             raise PhemexAPIException(response)
@@ -71,6 +91,12 @@ class Client(object):
         https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-trading-account-and-positions
         """
         return self._send_request("get", "/accounts/accountPositions", {'currency': currency})
+
+    def query_aop_with_upnl(self, currency: str):
+        """
+        https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-trading-account-and-positions-with-unrealized-pnl
+        """
+        return self._send_request("get", "/accounts/positions", {'currency': currency})
 
     def quotation(self, params: dict):
         """
@@ -102,7 +128,7 @@ class Client(object):
         """
         return self._send_request("put", "/orders/create", params=params)
 
-    def amend_order(self, params: dict):
+    def replace_order(self, params: dict):
         """
         https://github.com/phemex/phemex-api-docs/blob/master/Public-API-en.md#622-amend-order-by-orderid
         """
@@ -180,9 +206,10 @@ class Client(object):
 
     def query_24h_ticker(self, symbol):
         """
-        https://github.com/phemex/phemex-api-docs/blob/master/Public-API-en.md#633-query-24-hours-ticker
+        https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-24-hours-ticker
         """
         return self._send_request("GET", "/md/ticker/24hr", params={"symbol": symbol})
+        # return self._send_request("GET", "/v1/md/ticker/24hr?symbol=BTCUSD", params={"symbol": symbol}) # 带现价
 
     def query_client_and_wallet(self, offset, limit, withCount):  # offset分页 limit限制查询账号数量  withCount是否查询所有账号
         return self._send_request('get', '/phemex-user/users/children',
@@ -239,6 +266,24 @@ class Client(object):
     def query_trading_fee_history(self, params):
         # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-trading-fees-history
         return self._send_request('get', '/api-data/futures/trading-fees', params=params)
+
+    def query_funding_fee_hisotry(self, params):
+        # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-funding-fees-history
+        return self._send_request('get', '/api-data/futures/funding-fees', params=params)
+
+    def query_order_history(self, symbol: str):
+        # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#futureDataOrdersHist
+        return self._send_request('get', '/api-data/futures/orders', params={'symbol': symbol})
+
+    def query_order_by_id(self, params: dict):
+        # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-user-order-by-orderid-or-query-user-order-by-client-order-id
+        # return self._send_request('get', '/exchange/order', params=params)
+        # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-orders-by-ids
+        return self._send_request('get', '/api-data/futures/orders/by-order-id', params=params)
+
+    def query_trade_history(self, params: dict):
+        # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#futureDataOrdersHist
+        return self._send_request('get', '/api-data/futures/trades', params=params)
 
     def chain_name(self, currency: str):
         return self._send_request('get', '/exchange/public/cfg/chain-settings', {'currency': currency})

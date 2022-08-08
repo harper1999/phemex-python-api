@@ -7,7 +7,7 @@
 import pandas as pd
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # pd.set_option('display.max_columns', 1000)
 pd.set_option('display.width', 1000)  # 横向最多显示多少个字符
@@ -19,7 +19,7 @@ client = Client(True)
 
 try:
     r = client.withdrawal_history(
-        {'currency': utils.Currency.USDT, 'withcount': True, 'limit': 50, 'offset': 0})
+        {'currency': constant.Currency.USDT, 'withcount': True, 'limit': 50, 'offset': 0})
     withdrawal_history = r['data']
     print(pd.DataFrame(withdrawal_history))
 

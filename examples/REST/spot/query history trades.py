@@ -10,7 +10,7 @@ import phemex.constant as constant
 import time
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 try:
     start_time = int(time.mktime(time.strptime('2022-3-10 00:00:00', '%Y-%m-%d %H:%M:%S'))*1000)  # 要求毫秒级即需要*1000
@@ -18,3 +18,4 @@ try:
     print(client.query_history_trades(constant.Symbol.sBTCUSDT, start_time, end_time))
 except PhemexAPIException as e:
     print(e)
+

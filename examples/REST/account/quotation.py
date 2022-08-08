@@ -7,8 +7,10 @@
 
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
+import phemex.constant as constant
 
-client = Client(False)
+
+client = Client(constant.Gateway.testnet)
 
 try:
     quotation = client.quotation({'fromCurrency': 'BTC', 'toCurrency': 'USD', 'fromAmountEv': 1_0000})

@@ -17,7 +17,7 @@ pd.set_option('expand_frame_repr', False)  # False表示不允许换行
 pd.set_option('display.max_columns', None)  # 显示所有列
 pd.set_option('display.max_rows', None)  # 显示所有行
 
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 try:
     start = int(time.mktime(time.strptime('2022-3-10 00:00:00', '%Y-%m-%d %H:%M:%S'))) * 1000

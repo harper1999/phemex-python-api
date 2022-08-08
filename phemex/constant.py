@@ -7,7 +7,10 @@
 from enum import Enum
 
 
-class URL:
+class Gateway:
+    testnet = 'testnet'
+    api = 'api'
+    vapi = 'vapi'
     highratelimit_restapi = 'https://vapi.phemex.com'
     mainnet_api = 'https://api.phemex.com'
     testnet_api = 'https://testnet-api.phemex.com'
@@ -22,7 +25,10 @@ class Currency:
     USDT = "USDT"
     TRX = 'TRX'
 
+
 class Symbol:
+    u1000RSRUSD = 'u1000RSRUSD'
+    APEUSD = 'APEUSD'
     BTCUSD = "BTCUSD"
     ETHUSD = "ETHUSD"
     XRPUSD = "XRPUSD"
@@ -30,8 +36,16 @@ class Symbol:
     MKRUSD = "MKRUSD"
     GOLDUSD = "GOLDUSD"  # deprecated
     SOLUSD = "SOLUSD"
+    DOGEUSD = 'DOGEUSD'
+    GLMRUSD = 'GLMRUSD'
+    ZECUSD = 'ZECUSD'
     uBTCUSD = 'uBTCUSD'
     sBTCUSDT = 'sBTCUSDT'
+    sDAIUSDT = 'sDAIUSDT'
+    sSOLUSDT = 'sSOLUSDT'
+    sFEIUSDT = 'sFEIUSDT'
+    cETHUSD = 'cETHUSD'
+
 
 class Trade:
     SIDE_BUY = "Buy"
@@ -52,6 +66,7 @@ class Trade:
     TIF_IMMEDIATE_OR_CANCEL = "ImmediateOrCancel"
     TIF_GOOD_TILL_CANCEL = "GoodTillCancel"
     TIF_FOK = "FillOrKill"
+    PostOnly = 'PostOnly'
 
     ORDER_STATUS_NEW = "New"
     ORDER_STATUS_PFILL = "PartiallyFilled"

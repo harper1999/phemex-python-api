@@ -6,14 +6,14 @@
 
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 #  query open orders
 try:
-    r = client.query_open_contract_orders(utils.Symbol.BTCUSD)
+    r = client.query_open_contract_orders(constant.Symbol.uBTCUSD)
     print("response:" + str(r))
 except PhemexAPIException as e:
     print(e)

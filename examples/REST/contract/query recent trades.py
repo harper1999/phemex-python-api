@@ -7,12 +7,12 @@
 import json
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client(True)
 
 try:
-    print(client.query_recent_trades(utils.Symbol.MKRUSD))
+    print(client.query_recent_trades(constant.Symbol.SOLUSD))
 except PhemexAPIException as e:
     print(e)

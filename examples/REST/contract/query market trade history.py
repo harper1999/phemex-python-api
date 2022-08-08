@@ -1,14 +1,14 @@
 # -*- coding=utf-8 -*-
 # @Time: 2022/2/20 23:38
 # @Author: Harper
-# @File: query trade history.py
+# @File: query market trade history.py
 # @Software: PyCharm
 
 import time
 import pandas as pd
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # pd.set_option('display.max_columns', 1000)
 pd.set_option('display.width', 1000)  # 横向最多显示多少个字符
@@ -18,11 +18,14 @@ pd.set_option('display.max_rows', None)  # 显示所有行
 
 
 # Create a client
-client = Client(True)
+client = Client(constant.Gateway.api)
 
 # 查询市场数据 历史成交订单
 try:
-    r = client.query_historical_trades(utils.Symbol.BTCUSD, '1341-2-1')
+    # r = client.query_historical_trades(constant.Symbol.BTCUSD, '0-0-0')
+    # r = client.query_historical_trades(constant.Symbol.BTCUSD, '1341-2-1')
+    r = client.query_historical_trades(constant.Symbol.uBTCUSD, '0-0-0')
+    # r = client.query_historical_trades(constant.Symbol.cETHUSD, '0-0-0')
     data = r['data']
 
     if data:

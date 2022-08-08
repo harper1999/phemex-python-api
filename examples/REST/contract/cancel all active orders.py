@@ -9,10 +9,10 @@ from phemex.exceptions import PhemexAPIException
 import phemex.constant as constant
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 # Cancel all active orders
 try:
-    client.cancel_all_normal_orders(constant.Symbol.BTCUSD)
+    client.cancel_all_normal_orders(constant.Symbol.uBTCUSD)
 except PhemexAPIException as e:
     print(e)

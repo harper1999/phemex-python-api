@@ -9,7 +9,7 @@ import time
 import pandas as pd
 from phemex.client import Client
 from phemex.exceptions import PhemexAPIException
-import phemex.constant as utils
+import phemex.constant as constant
 
 # pd.set_option('display.max_columns', 1000)
 # pd.set_option('display.width', 1000)  # 横向最多显示多少个字符
@@ -20,10 +20,10 @@ pd.set_option('display.max_columns', None)  # 显示所有列
 pd.set_option('display.max_rows', None)  # 显示所有行
 
 # Create a client
-client = Client(False)
+client = Client(constant.Gateway.testnet)
 
 try:
-    r = client.query_open_spot_orders(utils.Symbol.sBTCUSDT)
+    r = client.query_open_spot_orders(constant.Symbol.sBTCUSDT)
     if r['data']:
         open_orders = pd.DataFrame(r['data'])
         print(open_orders)
