@@ -18,7 +18,7 @@ class Client(object):
 
         elif gateway == 'vapi':
             self.api_URL = constant.Gateway.highratelimit_restapi
-            self.api_key = ''  # vapi
+            self.api_key = '' 
             self.api_secret = ''
 
         elif gateway == 'testnet':
@@ -293,6 +293,4 @@ class Client(object):
         # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#query-trading-fees-history
         return self._send_request('get', '/exchange/wallets/withdrawList', params=params)
 
-    def request_withdrawal(self, params: dict, body: dict):
-        # https://github.com/phemex/phemex-api-docs/blob/master/Public-Contract-API-en.md#request-withdraw
-        return self._send_request('post', '/exchange/wallets/v2/createWithdraw', params=params, body=body)
+

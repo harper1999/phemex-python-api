@@ -9,12 +9,12 @@ import hmac
 import hashlib
 import pprint
 
-# api_key = "2dfd9f1a-ff73-462a-8f69-0274e043b323"
-# api_secret = "6b9XnreinDMCNNlaNxfeoblIXiRcALtco35KcholPx5iMjI0ZTY5NS00MWY5LTRiOGMtYWZmMC1lZDc3ZjdmMTgzYjQ"
-test_api_key = 'd351ce2d-10b4-4692-b9c4-390fa688e839'
-test_api_secret = 'nOPiUHr5_VQ_rSbNkiOp7Ef-9EdBVsL1BG6eVAGE2ok5ZjEwZjJjMS03ZTZmLTQzNTktYWE1Yi0xNzI0YzNjODI0MDk'
-main_api_key = '1f31da3c-3747-4b88-b423-e8b524b44de9'  # 主账户
-main_api_secret = 'ZLRKwDte6zdOlQAA4nsPUu1b9x_OiOGzjhnc-xFjWlEzYmJhZGJlNy1kNzljLTRiZjctOGQxMS1iNDI0MjA4YWM3NmI'
+# api_key = ""
+# api_secret = ""
+test_api_key = ''
+test_api_secret = '
+main_api_key = ''  
+main_api_secret = ''
 
 test_ws = "wss://testnet.phemex.com/ws"
 main_ws = 'wss://phemex.com/ws'
@@ -72,10 +72,10 @@ def on_open(ws):
 
 
 if __name__ == "__main__":
-    websocket.enableTrace(True)  # 开启运行状态追踪
+    websocket.enableTrace(True)  
     ws = websocket.WebSocketApp(test_ws, on_open=on_open, on_message=on_message,
                                 on_error=on_error, on_close=on_close)
     ws.run_forever(ping_interval=5, ping_timeout=2, dispatcher=rel)
-    # Set dispatcher to automatic reconnection  执行中跳转执行on_open
-    rel.signal(2, rel.abort)  # Keyboard Interrupt  返回<Signal Object | Callback:"abort">
-    rel.dispatch()  # 执行中跳转执行on_message
+    # Set dispatcher to automatic reconnection 
+    rel.signal(2, rel.abort)  
+    rel.dispatch()  
